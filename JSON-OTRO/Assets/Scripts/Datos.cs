@@ -111,7 +111,6 @@ public class Datos : MonoBehaviour
     IEnumerator MiFuncion(int valor)
     {
         Debug.Log("bai");
-        yield return new WaitForSeconds(3);
         Debug.Log("hola" + valor);
         yield return new WaitForSeconds(2);
         Debug.Log("vamonos");

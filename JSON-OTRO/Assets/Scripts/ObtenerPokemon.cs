@@ -18,7 +18,7 @@ public class ObtenerPokemon : MonoBehaviour
 
     IEnumerator ConsultarPokemon()
     {
-        string url = "https://pokeapi.co/api/v2/pokemon/huevo";
+        string url = "http://localhost:3000/";
 
         UnityWebRequest webRequest = UnityWebRequest.Get(url);
         yield return webRequest.SendWebRequest();
