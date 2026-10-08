@@ -1,13 +1,31 @@
 const http = require("node:http");
+const { arch } = require("node:os");
 const puerto = 3000;
 
+var archivo = {
+    papitas : [
+        {
+            nombre : "Incógnito",
+            precio : 30,
+            marca : "Doritos"
+        },
+        {
+            nombre : "Originales",
+            precio : 17,
+            marca : "Takis"
+        },
+    ]
+}
+
 const server = http.createServer((request, response) => {
-    response.statusCode = 200;
-    response.setHeader("Content-Type", "application/json");
-    const objeto_respuesta = {
-        id : 54
+
+    if(request.method = "GET"){
+        response.statusCode = 200;
+        response.setHeader("Content-Type", "application/json");
+        response.end(JSON.stringify(archivo));
     }
-    response.end(JSON.stringify(objeto_respuesta));
+
+    
 });
 
 server.listen(puerto, () => {
