@@ -25,6 +25,17 @@ const server = http.createServer((request, response) => {
         response.end(JSON.stringify(archivo));
     }
 
+    if(request.method == "POST"){
+        request.on("data", info => {
+            const nuevas_papitas = JSON.parse(info);
+            archivo.papitas.push(nuevas_papitas);
+
+            response.statusCode = 201;
+            response.setHeader("Content-Type", "application/json");
+            response.end("Papitas creadas exitosamente");
+        });
+    }
+
     
 });
 

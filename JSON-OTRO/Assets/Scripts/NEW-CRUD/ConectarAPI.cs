@@ -9,13 +9,27 @@ public class ConectarAPI : MonoBehaviour
 {
     string texto_endpoint = "http://localhost:3000/";
 
+    [Header ("GET")]
+
     //--------------GET----------------
     [SerializeField] TMP_Text textoGet;
+
+
+    [Header("POST")]
 
     //--------------POST---------------
     [SerializeField] TMP_InputField input_nombre;
     [SerializeField] TMP_InputField input_precio;
     [SerializeField] TMP_Dropdown input_marca;
+
+
+    [Header("PUT")]
+
+    //--------------PUT---------------
+    [SerializeField] TMP_InputField PutInput_indice;
+    [SerializeField] TMP_InputField PutInput_nombre;
+    [SerializeField] TMP_InputField PutInput_precio;
+    [SerializeField] TMP_Dropdown PutInput_marca;
 
     [Serializable]
 
@@ -88,11 +102,19 @@ public class ConectarAPI : MonoBehaviour
         string texto_papitas = JsonUtility.ToJson(papitas);
 
         Debug.Log(texto_papitas);
+
+        StartCoroutine(PostPapitas(texto_papitas));
     }
 
-    IEnumerator PostPapitas()
+    IEnumerator PostPapitas(string texto_json)
     {
-        UnityWebRequest webRequest = UnityWebRequest.Post(texto_endpoint, "{}", "application/json");
+        UnityWebRequest webRequest = UnityWebRequest.Post(texto_endpoint, texto_json, "application/json");
         yield return webRequest.SendWebRequest();
+        Debug.Log(webRequest.downloadHandler.text);
+    }
+
+    public void ModificarPapitas()
+    {
+        Debug.Log("Modifica papas");
     }
 }
