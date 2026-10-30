@@ -62,6 +62,10 @@ public class ConectarAPI : MonoBehaviour
         }
 
         input_marca.AddOptions(listaOpciones);
+
+        PutInput_marca.ClearOptions();
+
+        PutInput_marca.AddOptions(listaOpciones);
     }
 
     // Update is called once per frame
@@ -115,6 +119,8 @@ public class ConectarAPI : MonoBehaviour
 
     public void ModificarPapitas()
     {
-        Debug.Log("Modifica papas");
+        Debug.Log(PutInput_marca);
+        //string texto_papitas_modificadas = "{\r\n    \"indice\": " + PutInput_indice.text + ",\r\n    \"marca\":" + PutInput_marca.value + ",\r\n    \"nombre\": \"Runners\",\r\n    \"precio\": 45\r\n}";
+        //Debug.Log(texto_papitas_modificadas);
     }
 }
