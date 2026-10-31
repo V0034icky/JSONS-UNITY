@@ -19,6 +19,8 @@ var archivo = {
 
 const server = http.createServer((request, response) => {
 
+    response.setHeader("Access-Control-Allow-Methods", "GET", "POST", "PUT", "DELETE");
+
     if(request.method = "GET"){
         response.statusCode = 200;
         response.setHeader("Content-Type", "application/json");
@@ -35,7 +37,37 @@ const server = http.createServer((request, response) => {
             response.end("Papitas creadas exitosamente");
         });
     }
+    if(request.method = "PUT"){
+        request.on("data", info => {
+            const papitas_mofiadas = JSON.parse(info);
+            console.log(papitas_mofiadas);
 
+            archivo.papitas[papitas_mofiadas.indice] = {
+                marca: papitas_mofiadas.marca,
+                nombre: papitas_mofiadas.nombre,
+                precio: papitas_mofiadas.precio
+            }
+
+            response.statusCode = 200;
+            response.setHeader("Content-Type", "application/json");
+            response.end("Papitas modificadas exitosamente");
+
+        });
+    }
+
+    if(request.method == "DELETE"){
+        const indice = request.url.replace("/", "");
+        archivo.papitas.splice(indice, 1)
+
+        response.statusCode = 200;
+            response.setHeader("Content-Type", "application/json");
+            response.end("Papitas borradas exitosamente");
+    }
+
+    if(request.method == "OPTIONS"){
+        response.writeHead(204);
+        response.end();
+    }
     
 });
 

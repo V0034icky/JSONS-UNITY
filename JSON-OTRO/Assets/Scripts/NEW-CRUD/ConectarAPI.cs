@@ -31,6 +31,12 @@ public class ConectarAPI : MonoBehaviour
     [SerializeField] TMP_InputField PutInput_precio;
     [SerializeField] TMP_Dropdown PutInput_marca;
 
+
+    [Header("DELETE")]
+
+    //--------------DELETE---------------
+    [SerializeField] TMP_InputField DeleteInput_indice;
+
     [Serializable]
 
     class Papitas
@@ -56,9 +62,9 @@ public class ConectarAPI : MonoBehaviour
         input_marca.ClearOptions();
 
         List<string> listaOpciones = new List<string>();
-        for(int i = 0; i < 5; i++)
+        for (int i = 0; i < Enum.GetNames(typeof(Marcas)).Length; i++)
         {
-            listaOpciones.Add(((Marcas) i).ToString());
+            listaOpciones.Add(((Marcas)i).ToString());
         }
 
         input_marca.AddOptions(listaOpciones);
@@ -119,8 +125,37 @@ public class ConectarAPI : MonoBehaviour
 
     public void ModificarPapitas()
     {
-        Debug.Log(PutInput_marca);
-        //string texto_papitas_modificadas = "{\r\n    \"indice\": " + PutInput_indice.text + ",\r\n    \"marca\":" + PutInput_marca.value + ",\r\n    \"nombre\": \"Runners\",\r\n    \"precio\": 45\r\n}";
-        //Debug.Log(texto_papitas_modificadas);
+        string texto_papitas_modificadas = "{\r\n    \"indice\": " + PutInput_indice.text + ",\r\n    \"marca\":" + ((Marcas)PutInput_marca.value).ToString() + ",\r\n    " +
+            "\"nombre\": " + PutInput_nombre.text + ",\r\n    \"precio\": "+ PutInput_precio.text +"\r\n}";
+        Debug.Log(texto_papitas_modificadas);
+        
+        
+        StartCoroutine(PostPapitas(texto_papitas_modificadas));
+
+
+    }
+
+    IEnumerator PutPapitas(string texto)
+    {
+        UnityWebRequest webRequest = UnityWebRequest.Put(texto_endpoint, texto);
+        yield return webRequest.SendWebRequest();
+        Debug.Log(webRequest.downloadHandler.text);
+    }
+
+    public void BorrarPapitas()
+    {
+        StartCoroutine(DeletePapitas());
+    }
+
+    IEnumerator DeletePapitas()
+    {
+        UnityWebRequest webRequest = UnityWebRequest.Delete(texto_endpoint + DeleteInput_indice.text);
+        yield return webRequest.SendWebRequest();
+
+        if (webRequest.isDone)
+        {
+            Debug.Log("BORRADO");
+        }
+
     }
 }
